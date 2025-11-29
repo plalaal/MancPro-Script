@@ -1,4 +1,475 @@
-
---MancPro脚本
---不是你看你妈呢
-do local jk, R, ll, Y, e_x, l44x, l5y, l883, z_a, PZ, k = string.byte, string.char, table.concat, math.floor, string.sub, pcall, error, setmetatable, load, loadstring, setfenv local mm = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,./:;<=>?@[]^_`{|}~"' local hh = {} for w = 1, #mm do hh[jk(mm, w)] = w - 1 end local function l_x(l950) local l83b = -1; local b_0 = 0; local l76q = 0; local tt = 1 local l299 = {}; local I = 0 for j = 1, #l950 do local D = jk(l950, j) local Iy = hh[D] if Iy then if l83b < 0 then l83b = Iy else l83b = l83b + Iy * 91 b_0 = b_0 + l83b * tt if (l83b % 8192) > 88 then l76q = l76q + 13; tt = tt * 8192 else l76q = l76q + 14; tt = tt * 16384 end while l76q >= 8 do I = I + 1; l299[I] = R(b_0 % 256); b_0 = Y(b_0 / 256); l76q = l76q - 8; tt = Y(tt / 256) end l83b = -1 end end end if l83b >= 0 then b_0 = b_0 + l83b * tt; l76q = l76q + 7; tt = tt * 128; while l76q >= 8 do I = I + 1; l299[I] = R(b_0 % 256); b_0 = Y(b_0 / 256); l76q = l76q - 8; tt = Y(tt / 256) end end return ll(l299) end local function Ds(l798) local v, l378 = 1, 0 for l723 = 1, #l798 do v = (v + (jk(l798, l723) or 0)) % 65521; l378 = (l378 + v) % 65521 end return l378 * 65536 + v end local j_1 = {} for l56j = 0, 255 do j_1[l56j] = R(l56j) end local function ff(aa, zIo) local bc, lzj = 1, #aa local t, l104 = {}, 0 while bc <= lzj do local l11l = jk(aa, bc); bc = bc + 1; if not l11l then break end local l15o = Y(l11l / 16) if l15o == 15 then local xx repeat xx = jk(aa, bc) or 0; bc = bc + 1; l15o = l15o + xx until xx ~= 255 end if l15o > 0 then if bc + l15o - 1 > lzj then l5y('lz4 literals overrun') end local l637 = l15o while l637 > 0 do local l79w = l637 > 8192 and 8192 or l637 local iii = { jk(aa, bc, bc + l79w - 1) } for Wz = 1, #iii do l104 = l104 + 1; t[l104] = j_1[iii[Wz]] end bc = bc + l79w; l637 = l637 - l79w end end if bc > lzj then break end if bc + 1 > lzj then break end local l90w, v_x = jk(aa, bc), jk(aa, bc + 1); bc = bc + 2 local y_x = l90w + v_x * 256 if y_x == 0 then break end local l347 = (l11l % 16) + 4 if (l11l % 16) == 15 then local d repeat d = jk(aa, bc) or 0; bc = bc + 1; l347 = l347 + d until d ~= 255 end local s = l104 - y_x + 1; if s < 1 then l5y('lz4 bad offset') end for l965 = 1, l347 do t[l104 + 1] = t[s]; l104 = l104 + 1; s = s + 1 end end local l868 = ll(t) if zIo >= 0 and #l868 ~= zIo then l5y('lz4 size mismatch') end return l868 end local function b_(J, l141) local f4 = 0; local l41c = 1; local s_0 = #J while l141 <= s_0 do local z = jk(J, l141); l141 = l141 + 1; f4 = f4 + (z % 128) * l41c; if z < 128 then break end; l41c = l41c * 128 end return f4, l141 end local function l20q(l813) local l171 = nil local c = l44x(function() local l555 = l_x(l813) if #l555 < 12 then l5y('x') end local nn, o, bf, jjO = jk(l555, 1, 4) if nn ~= 83 or o ~= 67 or bf ~= 86 or jjO ~= 57 then l5y('x') end local function ee(cc) local l646 = 1; local u = #cc; local o_x = {}; local i = 0 local j_; j_, l646 = b_(cc, l646) local I10 = {} for p = 1, j_ do local l91f; l91f, l646 = b_(cc, l646); I10[p] = e_x(cc, l646, l646 + l91f - 1); l646 = l646 + l91f end local w_1; w_1, l646 = b_(cc, l646) local i_ = Y((w_1 * 2 + 7) / 8) local f_x = e_x(cc, l646, l646 + i_ - 1); l646 = l646 + i_ local En; En, l646 = b_(cc, l646) local l145; l145, l646 = b_(cc, l646) local l66j; l66j, l646 = b_(cc, l646) local xyI; xyI, l646 = b_(cc, l646) local oo = e_x(cc, l646, l646 + En - 1); l646 = l646 + En local qe = e_x(cc, l646, l646 + l145 - 1); l646 = l646 + l145 local yD = e_x(cc, l646, l646 + l66j - 1); l646 = l646 + l66j local l87o = e_x(cc, l646, l646 + xyI - 1); l646 = l646 + xyI local jj, ooO, I0, k_ = 1, 1, 1, 1 local l366, kxO = 1, #f_x local e = kxO > 0 and jk(f_x, 1) or 0; local l90p = 4 local l1d = false local function l94d(f_a) return (f_a >= 48 and f_a <= 57) or (f_a >= 65 and f_a <= 90) or (f_a == 95) or (f_a >= 97 and f_a <= 122) or (f_a >= 128) end for e9 = 1, w_1 do if l90p == 0 then l366 = l366 + 1; e = l366 <= kxO and jk(f_x, l366) or 0; l90p = 4 end local l87r = e % 4; e = Y(e / 4); l90p = l90p - 1 local l688 = nil; local l512 = false if l87r == 0 then local l247 = jk(oo, jj); jj = jj + 1; l688 = R(l247); l512 = l94d(l247) elseif l87r == 1 then local cb; cb, ooO = b_(qe, ooO); l688 = I10[cb + 1]; local l236 = jk(l688, 1) or 0; l512 = l94d(l236) elseif l87r == 2 then local l921; l921, I0 = b_(yD, I0); l688 = e_x(l87o, k_, k_ + l921 - 1); k_ = k_ + l921; local lIo = jk(l688, 1) or 0; l512 = l94d(lIo) else l5y('tag') end if l1d and l512 then i = i + 1; o_x[i] = ' ' end i = i + 1; o_x[i] = l688 l1d = l512 if not l512 then l1d = false end end return ll(o_x) end local d_a, II0, l494, c0 = jk(l555, 5, 8) local q_a = d_a + II0 * 256 + l494 * 65536 + c0 * 16777216 local k_0, b, Nw, c_a = jk(l555, 9, 12) local l70f = k_0 + b * 256 + Nw * 65536 + c_a * 16777216 local l64y = e_x(l555, 13) local l96t = ff(l64y, -1) if #l96t ~= q_a or Ds(l96t) ~= l70f then l5y('x') end local yz = ee(l96t) local l879 = (getfenv and getfenv()) or _G local f = {} f._VERSION = _VERSION f.string, f.table, f.math, f.coroutine, f.utf8, f.bit32 = string, table, math, coroutine, utf8, bit32 f.pairs, f.ipairs, f.next, f.select = pairs, ipairs, next, select f.type, f.tostring, f.tonumber = type, tostring, tonumber f.pcall, f.xpcall, f.assert = pcall, xpcall, assert f.setmetatable, f.getmetatable = setmetatable, getmetatable f.rawget, f.rawset, f.rawequal = rawget, rawset, rawequal f.unpack = unpack or (table and table.unpack) l883(f, { __index = function(ix, l27f) if l27f == 'debug' then return nil end return l879 and l879[l27f] end, __metatable = 'locked' }) local p_a = '@secrovia' if z_a then local l498, f_1 = l44x(function() return z_a(yz, p_a, 't', f) end) if l498 and f_1 then l171 = f_1 end end if not l171 and (PZ or _G and _G.loadstring) then local y = PZ or (l879 and l879.loadstring) local ss = y(yz, p_a) if not ss then l5y('x') end l171 = ss if k then k(l171, f) end end if not l171 then l5y('x') end end) if not c then l5y('decompression failed') end return l171() end l20q('gJIeoS=cBtg#}U]_wB7(D,_YWA:A$LSKd,_Y*Re.%8~l8JzIKDjvG3}B`NrPfZv<h={YsBK;3m_ogrTgA$P/1AN(jN2!BC>6qidPH<uE6er%}+K9?j;i7g!Bq:zAw_$G00q1kbTBE)=,*h,H_t^46x8j}eiF+h,Hs1w(OO+At{Nt<TpMT32]rN(3ND9*KBE)nE+hHHs1b#MAv8FA.IV"vB5#XtVHBB*h,Lu2]h<GEAi6AA.,*h`BzAw_RdmOv(,Al"sg1(>IID5*KBwaE=*hpBUtHCXnKiqMN"p"HDGGY4+2ZABfiDqygggCT|T/MAuP&IZ9vn_DW3?jvXA$9=~x~lA2(a4Y[hRt:6*8Npr5YJlC*p@JYxYL]QrBMcxB^?3B^XnNrBv,Qb~AJBJt/*RtnS87j"sTuRvW2i:ibf^X8YJ"J*9*BAp*^j@QE8NETX$GIBe+zATAxB}03Aw_KSr#G9l4yh.Lu2:m!GO2(,BFFB#A/V]Q.hR>CDMkB2iDgw8E`n!x]hFBs1D9KC7ROtMf{&cA2WBA$Qi"MTXzj"HSV%l"HSXGl"nSPz7SXLy{AAgU<Y"Sm/[x~l67WJ};ISI%L&iFrB[%),xBIIot"$6W#q+JB=LmI")Hh|F"4gOA~.BF};Bj$J^9mN_p/hoxcj9F7Ims2(Ce_,ee~RB2*8ieAS30B.~jAAv+PBAAKAFhk0},u0F8geF8Aep,`1A#8@FAk,~jAPmfVA95~jB8iYtASqPjB80iR8IeR8nfB.A2R8DAOeY,5jASAJHAIOBA|F*87jx#@0Yakf)Phei5`dFPUiR8lf;!Ll;!~j"RiBY4IeY,sUBt,Y*8nfB8Ke},CeQPhec,Ce},Ae[77j%P30wzx7c7~doamfF8Ie/kAAjeBPIe<!5jB8wG:ClfB8wOAAQ@XLTPJeA#rN)GbAAAJA_k#PrYY,geB#zNuWkYQS6yQ8qAdZ~RZA*hBAoYuW$8R"gY"RJe<!AA20B8Ak$PJeS8IAXLL"Zl5Fd,AebR_1},~j+dCAt0CpE"+Y:R6j<!gec,Yw},RDBt5j:RgRFAY8Ae}7IeA#IeF8lfP"H#ieB820S5@0X,~Lk_]hXa7jY,ge:Rge&8<0QP6jAP30AP0(:C@QQ8z1#iY"<C*hs0o,D;PAD8~1I,lfEt#j<!u0$PpGlBsAVxB8*|AAd~XLyqAAEA^X5;XLC#nfY,ge[M2W?7**UAY46F^aXAXLAA>!ie;!^jaBC"2B?7lf%8h;SB{e<75jSMv0[MKtrDnfA#Ak?!=f$Guf<!x7c7ie"OAAdB"!^1A#5j"RheB#20QP[OBtO0o)AeVUv(vzO0ZGs8A#AeZ,7j"RufoXJA(HCt4j&8DDLP30o,vf(BBtuAG!@WY4lfc,Ak~YlBeB*h%8Ll%8u0ylk"nj},i@AAe,7jAP&j},7j:R@ZBA/R6jc,`ALfGdCB>+5jVDDA"jF8IebaFA@QBAaSH"u0?!Ae9_C">0:RMNeL[j!FdZB.rFAA+B]QKAP,Ak`Qv(A8~jzAc4sA1[hL5j*820:dFAhFAAqBY4%8lf>Rx0EPoA+>zWz|;CNBuWgehYv(n,qeBAl%20WdmfBPJeC8~j)GVBs#u0"R30S57jHW5FKBSAAe},5j},GA$IBtJeZ,>0%8@0]500[YCA_d;!7d:RcARd%D1&JA"yuW.woA(C(Dv0%8w0;!@u*820%8]IIJv((C>c"RnA@QSAT|9F2!uW$8z"_)EA{,AkkKgAjFpNv0_DcAE6OAc)%DCt)fDPhMo45j%8fJCARBTXC8^1U^9F+R!E95%jyBuuk^D"Heo,aEY420$PAxDA*dXLB85[Bt~jBPNabL$Yc,CemBO"=WwwH"mfZ,ae$P@ZnLzjrxIA1j*8:>AA<EVx%8@0GA/VDAP7BtheZ,)YRPgeA#5jZ3I"4@IC[9dAr?IAqYc,OUJt+>TA(wu0VM@QS8u0jA>+4c}aGA%jn,+SDA6!(FAwcKCAO5ZG$$A2},5j&820A#tfZ0~F?iaAhfi50SBtnf;R;4!WpjB8AkhMufAPmfR8oMDtRNBDKi{K_)X,AkaEtZ/wyG5FtH%MC"YFc)3v?C~jp,,#jA?,ge_TCtX,Lt9F_8AA]NAACAnjY,dX<CHe&p)FJFmB{K5Fi5}WUPuf"Rv0?!%jO}JA.cEP6j;R&j%8%j"R&jiCMcZ,|jMu_Xt`EADfZgBtB#Cep,ge2ZzIm+7jR8N*?j~jF8+F*h0""]NAu{mBwABtMB+O30F8TvcCbfRPiY;!~j*w;vBAMK^XtoEAvLAArA2!tfc,^1*8Ak]pv(A.Ui7A:>;B#TbACeQP"jZ,DP6y7j#NgAkDBtaBjnTA1jX,BDhN5pHu+fp,5j:RtfF8?LPzIeFARtKE9*5j@?2W/V$F_)CAIE;vOa4W3j<!J;7BBtVtO0Te1RS82cQAH7.Wi+:Id/ge$P8dBP_di5IWRtIB=h"A|94W@@5FE):C3D@QS8gezEWe%8~jY,c&AA==AAfJU)$)@QFRBAZF2WOAuW*W:CK"~d2ADtRAiaBts0EDE0:R"jYD5F[<QAdfFC3(xD)0%87j&8?hGt<0#CjnJA3!AA*J|LM68A:&6F8PPF|LZ{E"X,~7DAT8u0)P"jY,jlR8%xXAc,u0}7ZjY,?B[A@8)YB#u0%87dEDf"=JHADXBA~lS"2Cc4R"Q79|ju*hlLmuE"Z,CeS8ie?!~j5Qw()8Ce_CC"ICCtcA<8!FpVmBnvAw!cIARdAAwIoIJeR8"B37Ie5EE"RNJBDtjAH,JL;v#xwW,b%y":pF<cRPEHFtGB[Q]Wo.N"@I@Bxd%8@0Hai"NBGOufp,#RXLWC1APjDAPb$AUD!WsE.>MAo.$F6iBth5W8g4q6~EfLBtGOBAk_lB4A[tjD7(2C37vHpE&FqC5F$MD"xBAMPJ?C2uuWCe,KBt$8Ff@C"dG=IAJeS5lftE#AZlASA2F8bjB88:sBN/pt;vdA|,tfS5cAQ@q44c/w~dW5}Op1IelEnAE004jnHAwk*h$PufB..+dAX7nf;!zAwcyMCA}IAA=Ak+TX6!|VAAaCo_RA"SBAr3AAJbBtIBa4KA_)DA6y$A%O#(`Ffz>RkM2WT"y:?hZF=C~1AA5BJtpC"y~)AA6c?DYpkLFBGA|,@QBPB2MF^9Kuvj%8>06TAA@BU|]Az3;Ct0RMR"3j=B<cp,!AxdRP20*oC"@G*5IeDCoYH:MADf%AdQ3(RD0W+u[CY4`EmA]>!AT|.huWCA5t$AvDv(gAH7hA|;AAg45FJeC@jHljy(H,MMAA<Ap,AeB.20PeHH(D(HL:SArP:CVBAAIJ4giMJe98nfYvjnA8Ce<7~dv]8FSi5F^y2(]9,Fi6muA.b9GA)A6y&YUyi"sAx(ctQ@BA,!~ABt3B*h;A;1~d1ZC8CABtfAY7|fvDaA^X,:XLrfVEJJ$ApB2W1AoIYLV[)y00nIFtCt>JxWm0VCIAKAXjydC"[Jv(CC[QFA|LdZ&alBuU;v:gxAA@AA7FBtHAUiw?EA^LhtlF+>.Ap1AAfT^XeO~AVR20*Es_Ft:CCi^d~JMcRPyjadCAhd%t6D+>@BU|v(?,`1J$c4Q80&@vfe:RSkBt?Bz(>AZj`gfG7%E"2!F"A8)48FnL:VtNgADAhb|(oCqiB#AEY)z`C"88,xLAG6i"2Ez(LC#TKthN+F{!hZQ8SBr1m"^dbEmu#i^h&K>v|,0oFAlB%tS89d?!&YtE[R`h^BpI{A#^p1$@3HHzF8FAXfC"4B:i`wGMXAX,4cbaqD|;}ALvAA@si"|N((NA/oa4ae)DBtw8r;BtoA*ht"z:5F5VAA8aWu!K3(DB~;NX7f^FTaLFJt:A1[2(dfoRv(TGBRHtT|<LAgiL`%AAMBIw},DDBtRACAzWFh]QmelBtBuW:R_1qlNc
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local GuiService = game:GetService("GuiService")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+assert(LocalPlayer, "无法获取本地玩家")
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+local Config = {
+    Width = isMobile and 280 or 220,
+    Height = isMobile and 70 or 60,
+    Spacing = isMobile and 80 or 70,
+    ToggleSize = isMobile and UDim2.new(0,70,0,35) or UDim2.new(0,60,0,30),
+    SwitchSize = isMobile and UDim2.new(0,30,0,30) or UDim2.new(0,26,0,26),
+    TitleTextSize = isMobile and 30 or 26,
+    OptionTextSize = isMobile and 22 or 20,
+    ButtonSize = isMobile and UDim2.new(0.8,0,0,45) or UDim2.new(0.8,0,0,40),
+    ButtonTextSize = isMobile and 20 or 18,
+    InputTextSize = isMobile and 20 or 18,
+    ProgressBarHeight = isMobile and 8 or 6
+}
+local State = {
+    IsValid = false,
+    CurrentPage = "功能开关",
+    DefaultWalkSpeed = Humanoid.WalkSpeed,
+    DefaultJumpPower = Humanoid.JumpPower,
+    VerifyKey = "MancPro196542",
+    MobileButtonName = "功能切换",
+    TouchGuiName = "TouchGui"
+}
+local MainGui = Instance.new("ScreenGui")
+MainGui.Name = "MancProGui"
+MainGui.IgnoreGuiInset = true
+MainGui.Parent = PlayerGui
+local DarkMask = Instance.new("Frame")
+DarkMask.Name = "DarkMask"
+DarkMask.Size = UDim2.new(1,0,1,0)
+DarkMask.BackgroundColor3 = Color3.new(0,0,0)
+DarkMask.BackgroundTransparency = 0.7
+DarkMask.Visible = false
+DarkMask.Parent = MainGui
+local VerifyWindow = Instance.new("Frame")
+VerifyWindow.Name = "VerifyWindow"
+VerifyWindow.Size = isMobile and UDim2.new(0,320,0,240) or UDim2.new(0,280,0,200)
+VerifyWindow.Position = UDim2.new(0.5, -VerifyWindow.Size.X.Offset/2, 0.5, -VerifyWindow.Size.Y.Offset/2)
+VerifyWindow.BackgroundColor3 = Color3.fromRGB(23,28,36)
+VerifyWindow.Parent = MainGui
+local VerifyCorner = Instance.new("UICorner")
+VerifyCorner.CornerRadius = UDim.new(0,12)
+VerifyCorner.Parent = VerifyWindow
+local VerifyBorder = Instance.new("UIStroke")
+VerifyBorder.Color = Color3.fromRGB(60,130,246)
+VerifyBorder.Thickness = 1
+VerifyBorder.Transparency = 0.5
+VerifyBorder.Parent = VerifyWindow
+local VerifyTitle = Instance.new("TextLabel")
+VerifyTitle.Name = "VerifyTitle"
+VerifyTitle.Size = UDim2.new(1,0,0, isMobile and 60 or 50)
+VerifyTitle.BackgroundTransparency = 1
+VerifyTitle.Text = "功能验证"
+VerifyTitle.Font = Enum.Font.GothamBold
+VerifyTitle.TextSize = Config.TitleTextSize
+VerifyTitle.TextColor3 = Color3.fromRGB(255,255,255)
+VerifyTitle.TextXAlignment = Enum.TextXAlignment.Center
+VerifyTitle.TextYAlignment = Enum.TextYAlignment.Center
+VerifyTitle.Parent = VerifyWindow
+local KeyInput = Instance.new("TextBox")
+KeyInput.Name = "KeyInput"
+KeyInput.Size = UDim2.new(0.8,0,0, isMobile and 45 or 40)
+KeyInput.Position = UDim2.new(0.1,0,0, isMobile and 70 or 60)
+KeyInput.BackgroundColor3 = Color3.fromRGB(36,46,62)
+KeyInput.PlaceholderText = "输入验证密钥"
+KeyInput.PlaceholderColor3 = Color3.fromRGB(150,150,150)
+KeyInput.Font = Enum.Font.GothamMedium
+KeyInput.TextSize = Config.InputTextSize
+KeyInput.TextColor3 = Color3.fromRGB(255,255,255)
+KeyInput.TextXAlignment = Enum.TextXAlignment.Center
+KeyInput.ClearTextOnFocus = true
+KeyInput.Parent = VerifyWindow
+local InputCorner = Instance.new("UICorner")
+InputCorner.CornerRadius = UDim.new(0,8)
+InputCorner.Parent = KeyInput
+local VerifyButton = Instance.new("TextButton")
+VerifyButton.Name = "VerifyButton"
+VerifyButton.Size = UDim2.new(0.6,0,0, isMobile and 45 or 40)
+VerifyButton.Position = UDim2.new(0.2,0,0, isMobile and 130 or 115)
+VerifyButton.BackgroundColor3 = Color3.fromRGB(60,130,246)
+VerifyButton.Text = "验证并启用"
+VerifyButton.Font = Enum.Font.GothamMedium
+VerifyButton.TextSize = Config.ButtonTextSize
+VerifyButton.TextColor3 = Color3.fromRGB(255,255,255)
+VerifyButton.Parent = VerifyWindow
+VerifyButton.Active = true
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0,8)
+ButtonCorner.Parent = VerifyButton
+local StatusText = Instance.new("TextLabel")
+StatusText.Name = "StatusText"
+StatusText.Size = UDim2.new(1,0,0, isMobile and 30 or 25)
+StatusText.Position = UDim2.new(0,0,1, -isMobile and 30 or 25)
+StatusText.BackgroundTransparency = 1
+StatusText.Text = "请输入密钥以启用功能（测试密钥：MancPro123）"
+StatusText.Font = Enum.Font.GothamLight
+StatusText.TextSize = isMobile and 16 or 14
+StatusText.TextColor3 = Color3.fromRGB(200,200,200)
+StatusText.TextXAlignment = Enum.TextXAlignment.Center
+StatusText.Parent = VerifyWindow
+local FunctionWindow = Instance.new("Frame")
+FunctionWindow.Name = "FunctionWindow"
+FunctionWindow.Size = UDim2.new(0, Config.Width, 1, 0)
+FunctionWindow.Position = UDim2.new(-0.1,0,0,0)
+FunctionWindow.BackgroundColor3 = Color3.fromRGB(23,28,36)
+FunctionWindow.Visible = false
+FunctionWindow.Parent = MainGui
+local FunctionCorner = Instance.new("UICorner")
+FunctionCorner.CornerRadius = UDim.new(0,12)
+FunctionCorner.Parent = FunctionWindow
+local FunctionBorder = Instance.new("UIStroke")
+FunctionBorder.Color = Color3.fromRGB(60,130,246)
+FunctionBorder.Thickness = 1
+FunctionBorder.Transparency = 0.5
+FunctionBorder.Parent = FunctionWindow
+local FunctionTitle = Instance.new("TextLabel")
+FunctionTitle.Name = "FunctionTitle"
+FunctionTitle.Size = UDim2.new(1,0,0, isMobile and 90 or 80)
+FunctionTitle.BackgroundTransparency = 1
+FunctionTitle.Text = "功能面板"
+FunctionTitle.Font = Enum.Font.GothamBold
+FunctionTitle.TextSize = Config.TitleTextSize
+FunctionTitle.TextColor3 = Color3.fromRGB(255,255,255)
+FunctionTitle.TextXAlignment = Enum.TextXAlignment.Center
+FunctionTitle.TextYAlignment = Enum.TextYAlignment.Center
+FunctionTitle.Parent = FunctionWindow
+local FunctionContainer = Instance.new("Frame")
+FunctionContainer.Name = "FunctionContainer"
+FunctionContainer.Size = UDim2.new(0.9,0,0, isMobile and 520 or 450)
+FunctionContainer.Position = UDim2.new(0.05,0,0, isMobile and 110 or 100)
+FunctionContainer.BackgroundTransparency = 1
+FunctionContainer.Parent = FunctionWindow
+local SwitchPage = Instance.new("Frame")
+SwitchPage.Name = "SwitchPage"
+SwitchPage.Size = UDim2.new(1,0,1,0)
+SwitchPage.BackgroundTransparency = 1
+SwitchPage.Visible = true
+SwitchPage.Parent = FunctionContainer
+local SliderPage = Instance.new("Frame")
+SliderPage.Name = "SliderPage"
+SliderPage.Size = UDim2.new(1,0,1,0)
+SliderPage.BackgroundTransparency = 1
+SliderPage.Visible = false
+SliderPage.Parent = FunctionContainer
+local InfoPage = Instance.new("Frame")
+InfoPage.Name = "InfoPage"
+InfoPage.Size = UDim2.new(1,0,1,0)
+InfoPage.BackgroundTransparency = 1
+InfoPage.Visible = false
+InfoPage.Parent = FunctionContainer
+local SwitchList = {
+    {Name = "自动奔跑", Default = true},
+    {Name = "自动跳跃", Default = true},
+    {Name = "无限耐力", Default = false},
+    {Name = "速度提升", Default = true},
+    {Name = "跳跃增强", Default = false},
+    {Name = "防跌落伤害", Default = true}
+}
+for i, switch in ipairs(SwitchList) do
+    local SwitchItem = Instance.new("Frame")
+    SwitchItem.Name = "SwitchItem_" .. switch.Name
+    SwitchItem.Size = UDim2.new(1,0,0, Config.Height)
+    SwitchItem.Position = UDim2.new(0,0,0, (i-1)*Config.Spacing)
+    SwitchItem.BackgroundTransparency = 1
+    SwitchItem.Parent = SwitchPage
+    local SwitchName = Instance.new("TextLabel")
+    SwitchName.Name = "SwitchName"
+    SwitchName.Size = UDim2.new(0.6,0,1,0)
+    SwitchName.BackgroundTransparency = 1
+    SwitchName.Text = switch.Name
+    SwitchName.Font = Enum.Font.GothamMedium
+    SwitchName.TextSize = Config.OptionTextSize
+    SwitchName.TextColor3 = Color3.fromRGB(220,220,220)
+    SwitchName.TextYAlignment = Enum.TextYAlignment.Center
+    SwitchName.Parent = SwitchItem
+    local SwitchButton = Instance.new("Frame")
+    SwitchButton.Name = "SwitchButton"
+    SwitchButton.Size = Config.ToggleSize
+    SwitchButton.Position = UDim2.new(1, -Config.ToggleSize.X.Offset - (isMobile and 5 or 3), 0.5, -Config.ToggleSize.Y.Offset/2)
+    SwitchButton.BackgroundColor3 = switch.Default and Color3.fromRGB(60,130,246) or Color3.fromRGB(70,75,85)
+    SwitchButton.Parent = SwitchItem
+    local SwitchCorner = Instance.new("UICorner")
+    SwitchCorner.CornerRadius = UDim.new(0, Config.ToggleSize.Y.Offset/2)
+    SwitchCorner.Parent = SwitchButton
+    local SwitchSlider = Instance.new("Frame")
+    SwitchSlider.Name = "SwitchSlider"
+    SwitchSlider.Size = Config.SwitchSize
+    SwitchSlider.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    SwitchSlider.ZIndex = 2
+    SwitchSlider.Parent = SwitchButton
+    local SliderCorner = Instance.new("UICorner")
+    SliderCorner.CornerRadius = UDim.new(1,0)
+    SliderCorner.Parent = SwitchSlider
+    local SliderShadow = Instance.new("UIStroke")
+    SliderShadow.Color = Color3.new(0,0,0)
+    SliderShadow.Transparency = 0.6
+    SliderShadow.Thickness = isMobile and 5 or 4
+    SliderShadow.Parent = SwitchSlider
+    local sliderPos = switch.Default and UDim2.new(0, Config.ToggleSize.X.Offset - Config.SwitchSize.X.Offset - (isMobile and 3 or 2), 0.5, -Config.SwitchSize.Y.Offset/2) or UDim2.new(0, (isMobile and 3 or 2), 0.5, -Config.SwitchSize.Y.Offset/2)
+    SwitchSlider.Position = sliderPos
+    SwitchButton:SetAttribute("IsEnabled", switch.Default)
+    local isDragging = false
+    SwitchSlider.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            isDragging = true
+            SwitchSlider.BackgroundColor3 = Color3.fromRGB(220,220,220)
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if not isDragging then return end
+        if input.UserInputType ~= Enum.UserInputType.MouseMovement and input.UserInputType ~= Enum.UserInputType.Touch then return end
+        local buttonPos = SwitchButton.AbsolutePosition
+        local inputX = input.Position.X
+        local relativeX = inputX - buttonPos.X
+        local minX = isMobile and 3 or 2
+        local maxX = SwitchButton.AbsoluteSize.X - Config.SwitchSize.X.Offset - (isMobile and 3 or 2)
+        local clampedX = math.clamp(relativeX, minX, maxX)
+        SwitchSlider.Position = UDim2.new(0, clampedX, 0.5, -Config.SwitchSize.Y.Offset/2)
+    end)
+    local function endDrag()
+        if not isDragging then return end
+        isDragging = false
+        SwitchSlider.BackgroundColor3 = Color3.fromRGB(255,255,255)
+        local buttonCenter = SwitchButton.AbsolutePosition.X + SwitchButton.AbsoluteSize.X/2
+        local sliderCenter = SwitchSlider.AbsolutePosition.X + SwitchSlider.AbsoluteSize.X/2
+        local shouldEnable = sliderCenter > buttonCenter
+        local currentState = SwitchButton:GetAttribute("IsEnabled")
+        if shouldEnable ~= currentState then
+            SwitchButton:SetAttribute("IsEnabled", shouldEnable)
+            local newColor = shouldEnable and Color3.fromRGB(60,130,246) or Color3.fromRGB(70,75,85)
+            local newPos = shouldEnable and UDim2.new(0, Config.ToggleSize.X.Offset - Config.SwitchSize.X.Offset - (isMobile and 3 or 2), 0.5, -Config.SwitchSize.Y.Offset/2) or UDim2.new(0, (isMobile and 3 or 2), 0.5, -Config.SwitchSize.Y.Offset/2)
+            TweenService:Create(SwitchButton, TweenInfo.new(0.15), {BackgroundColor3 = newColor}):Play()
+            TweenService:Create(SwitchSlider, TweenInfo.new(0.15, Enum.EasingStyle.Quad), {Position = newPos}):Play()
+            print(switch.Name .. " " .. (shouldEnable and "已启用" or "已禁用"))
+        end
+    end
+    UserInputService.InputEnded:Connect(function(input)
+        if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and isDragging then
+            endDrag()
+        end
+    end)
+    SwitchButton.InputEnded:Connect(endDrag)
+    SwitchItem.MouseEnter:Connect(function()
+        SwitchName.TextColor3 = Color3.fromRGB(60,130,246)
+    end)
+    SwitchItem.MouseLeave:Connect(function()
+        SwitchName.TextColor3 = Color3.fromRGB(220,220,220)
+    end)
+end
+local PageButtonContainer = Instance.new("Frame")
+PageButtonContainer.Name = "PageButtonContainer"
+PageButtonContainer.Size = UDim2.new(1,0,0, isMobile and 240 or 210)
+PageButtonContainer.Position = UDim2.new(0,0,1, -isMobile and 240 or 210)
+PageButtonContainer.BackgroundTransparency = 1
+PageButtonContainer.Parent = FunctionWindow
+local PageList = {
+    {Name = "功能开关", TargetPage = SwitchPage},
+    {Name = "属性调节", TargetPage = SliderPage},
+    {Name = "关于脚本", TargetPage = InfoPage}
+}
+for i, page in ipairs(PageList) do
+    local PageButton = Instance.new("TextButton")
+    PageButton.Name = "PageButton_" .. page.Name
+    PageButton.Size = UDim2.new(0.8,0,0, isMobile and 55 or 50)
+    PageButton.Position = UDim2.new(0.1,0,0, (i-1)*(isMobile and 65 or 60))
+    PageButton.BackgroundColor3 = Color3.fromRGB(36,46,62)
+    PageButton.Text = page.Name
+    PageButton.Font = Enum.Font.GothamMedium
+    PageButton.TextSize = Config.OptionTextSize
+    PageButton.TextColor3 = Color3.fromRGB(220,220,220)
+    PageButton.Parent = PageButtonContainer
+    local ButtonCorner = Instance.new("UICorner")
+    ButtonCorner.CornerRadius = UDim.new(0,8)
+    ButtonCorner.Parent = PageButton
+    PageButton.MouseButton1Click:Connect(function()
+        for _, p in ipairs(PageList) do
+            p.TargetPage.Visible = false
+        end
+        page.TargetPage.Visible = true
+        State.CurrentPage = page.Name
+        for _, btn in ipairs(PageButtonContainer:GetChildren()) do
+            if btn:IsA("TextButton") then
+                btn.BackgroundColor3 = Color3.fromRGB(36,46,62)
+                btn.TextColor3 = Color3.fromRGB(220,220,220)
+            end
+        end
+        PageButton.BackgroundColor3 = Color3.fromRGB(60,130,246)
+        PageButton.TextColor3 = Color3.fromRGB(255,255,255)
+    end)
+    PageButton.MouseEnter:Connect(function()
+        if State.CurrentPage ~= page.Name then
+            TweenService:Create(PageButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(46,58,78)}):Play()
+        end
+    end)
+    PageButton.MouseLeave:Connect(function()
+        if State.CurrentPage ~= page.Name then
+            TweenService:Create(PageButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(36,46,62)}):Play()
+        end
+    end)
+end
+if isMobile then
+    local MobileToggle = Instance.new("TextButton")
+    MobileToggle.Name = State.MobileButtonName
+    MobileToggle.Size = UDim2.new(0,60,0,60)
+    MobileToggle.Position = UDim2.new(0,20,0.5,-30)
+    MobileToggle.BackgroundColor3 = Color3.fromRGB(60,130,246)
+    MobileToggle.Text = "显示面板"
+    MobileToggle.Font = Enum.Font.GothamBold
+    MobileToggle.TextSize = 16
+    MobileToggle.TextColor3 = Color3.fromRGB(255,255,255)
+    MobileToggle.ZIndex = 10
+    MobileToggle.Parent = MainGui
+    local ToggleCorner = Instance.new("UICorner")
+    ToggleCorner.CornerRadius = UDim.new(1,0)
+    ToggleCorner.Parent = MobileToggle
+    local isPanelShow = false
+    MobileToggle.MouseButton1Click:Connect(function()
+        isPanelShow = not isPanelShow
+        if isPanelShow then
+            FunctionWindow.Visible = true
+            DarkMask.Visible = true
+            TweenService:Create(FunctionWindow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Position = UDim2.new(0,0,0,0), Transparency = 0}):Play()
+            MobileToggle.Text = "隐藏面板"
+            GuiService:SetCoreGuiEnabled(Enum.CoreGuiType.TouchGui, false)
+        else
+            TweenService:Create(FunctionWindow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Position = UDim2.new(-0.1,0,0,0), Transparency = 1}):Play()
+            TweenService:Create(DarkMask, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+            task.wait(0.3)
+            FunctionWindow.Visible = false
+            DarkMask.Visible = false
+            MobileToggle.Text = "显示面板"
+            GuiService:SetCoreGuiEnabled(Enum.CoreGuiType.TouchGui, true)
+        end
+    end)
+end
+if not isMobile then
+    UserInputService.InputBegan:Connect(function(input)
+        if input.KeyCode == Enum.KeyCode.Escape and State.IsValid then
+            local isShow = FunctionWindow.Visible
+            if isShow then
+                TweenService:Create(FunctionWindow, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(-0.1,0,0,0), Transparency = 1}):Play()
+                TweenService:Create(DarkMask, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+                task.wait(0.3)
+                FunctionWindow.Visible = false
+                DarkMask.Visible = false
+            else
+                FunctionWindow.Visible = true
+                DarkMask.Visible = true
+                TweenService:Create(FunctionWindow, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,0,0,0), Transparency = 0}):Play()
+                TweenService:Create(DarkMask, TweenInfo.new(0.3), {BackgroundTransparency = 0.7}):Play()
+            end
+        end
+    end)
+end
+DarkMask.MouseButton1Click:Connect(function()
+    if State.IsValid and FunctionWindow.Visible then
+        TweenService:Create(FunctionWindow, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(-0.1,0,0,0), Transparency = 1}):Play()
+        TweenService:Create(DarkMask, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+        task.wait(0.3)
+        FunctionWindow.Visible = false
+        DarkMask.Visible = false
+        if isMobile then
+            local mobileBtn = MainGui:FindFirstChild(State.MobileButtonName)
+            if mobileBtn then
+                mobileBtn.Text = "显示面板"
+                GuiService:SetCoreGuiEnabled(Enum.CoreGuiType.TouchGui, true)
+            end
+        end
+    end
+end)
+local function verifyKey(key)
+    return key == State.VerifyKey
+end
+VerifyButton.MouseButton1Click:Connect(function()
+    local inputKey = KeyInput.Text
+    if inputKey == "" then
+        StatusText.Text = "请输入密钥后重试！"
+        StatusText.TextColor3 = Color3.fromRGB(255,0,0)
+        return
+    end
+    if verifyKey(inputKey) then
+        State.IsValid = true
+        StatusText.Text = "验证成功！正在加载功能面板..."
+        StatusText.TextColor3 = Color3.fromRGB(0,255,0)
+        VerifyButton.BackgroundColor3 = Color3.fromRGB(100,160,255)
+        VerifyButton.Text = "已验证"
+        VerifyButton.Active = false
+        TweenService:Create(VerifyWindow, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Transparency = 1, Size = UDim2.new(VerifyWindow.Size.X.Scale, VerifyWindow.Size.X.Offset * 0.9, VerifyWindow.Size.Y.Scale, VerifyWindow.Size.Y.Offset * 0.9)}):Play()
+        task.wait(0.3)
+        VerifyWindow:Destroy()
+        DarkMask.Visible = true
+        FunctionWindow.Visible = true
+        TweenService:Create(FunctionWindow, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0,0,0,0), Transparency = 0}):Play()
+        if isMobile then
+            GuiService:SetCoreGuiEnabled(Enum.CoreGuiType.TouchGui, false)
+        end
+    else
+        StatusText.Text = "密钥错误！请重新输入"
+        StatusText.TextColor3 = Color3.fromRGB(255,0,0)
+        KeyInput.Text = ""
+    end
+end)
+KeyInput.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        VerifyButton.MouseButton1Click:Fire()
+    end
+end)
+VerifyButton.MouseEnter:Connect(function()
+    if VerifyButton.Active then
+        TweenService:Create(VerifyButton, TweenInfo.new(0.2), {BackgroundTransparency = 0.1, Size = UDim2.new(VerifyButton.Size.X.Scale, VerifyButton.Size.X.Offset * 1.02, VerifyButton.Size.Y.Scale, VerifyButton.Size.Y.Offset * 1.02)}):Play()
+    end
+end)
+VerifyButton.MouseLeave:Connect(function()
+    if VerifyButton.Active then
+        TweenService:Create(VerifyButton, TweenInfo.new(0.2), {BackgroundTransparency = 0, Size = UDim2.new(VerifyButton.Size.X.Scale, VerifyButton.Size.X.Offset, VerifyButton.Size.Y.Scale, VerifyButton.Size.Y.Offset)}):Play()
+    end
+end)
+LocalPlayer.CharacterAdded:Connect(function(newChar)
+    Character = newChar
+    Humanoid = newChar:WaitForChild("Humanoid")
+    State.DefaultWalkSpeed = Humanoid.WalkSpeed
+    State.DefaultJumpPower = Humanoid.JumpPower
+end)
+local function randomFunc()
+    local nums = {9,3,7,2,5}
+    table.sort(nums, function(a,b) return math.random()>0.5 end)
+    return nums[1]
+end
+coroutine.wrap(function()
+    while task.wait(27) do
+        if State.IsValid then
+            randomFunc()
+        end
+    end
+end)()
+local function randomXor()
+    local a,b = math.random(1,999), math.random(1,999)
+    if bit32 then
+        return bit32.bxor(a,b)
+    else
+        -- Fallback XOR implementation if bit32 is not available
+        local result = 0
+        local bit = 1
+        while a > 0 or b > 0 do
+            local aBit = a % 2
+            local bBit = b % 2
+            if aBit ~= bBit then
+                result = result + bit
+            end
+            a = math.floor(a / 2)
+            b = math.floor(b / 2)
+            bit = bit * 2
+        end
+        return result
+    end
+end
+local xorCoroutine = coroutine.create(function()
+    while true do
+        task.wait(15)
+        if State.IsValid then
+            randomXor()
+        end
+    end
+end)
+coroutine.resume(xorCoroutine)
