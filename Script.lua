@@ -320,7 +320,9 @@ end)
 buttons[2].MouseButton1Click:Connect(function()
     hideAllFrames()
     CommonFrame.Visible = true
-    Joystick.Visible = flyEnabled
+    if flyEnabled then
+        Joystick.Visible = true
+    end
 end)
 
 buttons[3].MouseButton1Click:Connect(function()
@@ -334,7 +336,7 @@ buttons[4].MouseButton1Click:Connect(function()
 end)
 
 CloseButton.MouseButton1Click:Connect(function()
-    hideAllFrames()
+    MainFrame.Visible = false
 end)
 
 IntroCloseButton.MouseButton1Click:Connect(function()
@@ -405,7 +407,9 @@ NoclipBtn.Parent = CommonFrame
 FlyBtn.MouseButton1Click:Connect(function()
     flyEnabled = not flyEnabled
     FlyFrame.Visible = flyEnabled
-    Joystick.Visible = flyEnabled
+    if CommonFrame.Visible then
+        Joystick.Visible = flyEnabled
+    end
     FlyBtn.Text = flyEnabled and "飞行 [开启]" or "飞行 [关闭]"
     
     if Character and Humanoid and RootPart then
